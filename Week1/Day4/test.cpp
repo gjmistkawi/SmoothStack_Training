@@ -23,5 +23,12 @@ int main() {
     cout << "bool + char: " << true + 'a' << endl;
     cout << "float + char: " << 1.5 + 'a' << endl;
 
+    // 4. Increment Operators
+    int x = 4;
+    int y = x+++2;
+    assert(y == 6);
+    assert(x == 5);
+    cout << "x: " << x << ", y: " << y << endl;
+
     return 0;
 }
