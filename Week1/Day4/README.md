@@ -9,6 +9,7 @@ The others work because of implicit casting, the strangest of which is the a == 
 ## 2 Truth Table for Cast Operators
 
 | | int | float | bool | char |
+|---|---|---|---|---|
 | int | int | float | int | int |
 | float | float | float | float | float |
 | bool | int | float | int | int |
