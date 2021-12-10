@@ -100,7 +100,7 @@ The others work because of implicit casting, the strangest of which is the a == 
 The expressions works because \(y = x+++2\); adds 2 to x and then assigns that value to y, and then once the expression is complete, x is incremented. If the expression was \(y = ++x+2\), then you would end up with y = 7 because you would increment x before the rest of the expression takes place.
 ## 5. More Truth Tables
 | x | y | AND | OR |
-| x | y | -- | --- |
+| -- | -- | -- | --- |
 | true | true | true | true |
 | true | false | false | true |
 | false | true | false | true |
