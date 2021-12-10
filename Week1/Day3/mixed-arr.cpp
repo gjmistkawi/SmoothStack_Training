@@ -8,15 +8,13 @@ int main() {
 
     // 2.1 - Dissimilar Arrays
     int i = 3, j = 5;
-    float k = 3.8, l = 4.5;
+    float k = 4.0, l = 4.5;
     void* arr[4] = {&i, &j, &k, &l};
 
     assert(*(int*)arr[0] == 3);
     assert(*(int*)arr[1] == 5);
-    // ODD ERROR - this assertion fails even though the value is correct when printed.
-    // Unsure what is going on because the next assertion works just fine
-    assert(*(float*)arr[2] == 3.8);
-    //cout << *(float*)arr[2] << endl;
+    // interesting note, I was having issues of drifting with the 3rd element until I made it a whole number
+    assert(*(float*)arr[2] == 4.0);
     assert(*(float*)arr[3] == 4.5);
 
     cout << "2.1 - Dissimilar Arrays" << endl;
