@@ -1,7 +1,7 @@
 #ifndef __account_h__
 #define __account_h__
 
-#include<iostream>
+#include <iostream>
 #include <string>
 #include <ctime>
 
@@ -20,13 +20,13 @@ class Account {
         Account(int,string,string,string);
         //~Account(void);
 
-        //getters
+        // Getters
         int     getAccountNum();
         string  getFirstName();
         string  getLastName();
         string  getSSN();
 
-        //to string method?
+        // Printing methods
         string  displayAccount();
         string  showAccount();
 };
