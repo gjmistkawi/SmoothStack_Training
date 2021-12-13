@@ -8,13 +8,13 @@ The application is currently set to only allow a single user to log in, and the 
 No encryption has been added to the transactions or login yet, but that will be added soon.
 
 ## Commands
--"show accounts"
--"display account"
--"search name"
--"new account"
--"close account"
--"help"
--"quit"
+*"show accounts"
+*"display account"
+*"search name"
+*"new account"
+*"close account"
+*"help"
+*"quit"
 
 ## Details
 ### Bank
