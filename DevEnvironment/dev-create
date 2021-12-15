@@ -1,0 +1,10 @@
+#sudo docker run -it dockerdev bash
+
+
+# sets image name
+export docker_img="dockerdev"
+
+# mounts local current working directory to /home/calvin/source_directory in the container
+#sudo docker run -dit -v "$(pwd)":/home/geoscow/source_directory:z -u $(whoami) "$docker_img" bash
+#sudo docker build . -t "$docker_img"
+sudo docker run -it -v "$(pwd)/../Week1/WeeklyProject":/usr/src "$docker_img" bash

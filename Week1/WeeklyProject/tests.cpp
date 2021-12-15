@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cassert>
-#include "account.h"
-#include "user.h"
-#include "bank.h"
+#include "headers/account.h"
+#include "headers/user.h"
+#include "headers/bank.h"
 
 using namespace std;
 
