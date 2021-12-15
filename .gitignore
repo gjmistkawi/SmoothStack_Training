@@ -1,0 +1,7 @@
+*
+!*.cpp
+!*.h
+!Makefile
+!.gitignore
+!Week1
+!Week2
