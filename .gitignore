@@ -1,7 +1,8 @@
 *
-!*.cpp
-!*.h
+!*.*
 !Makefile
 !.gitignore
-!README.md
-!Week*/Day*/
+#!README.md
+!*/
+.vscode
+.fuse*
