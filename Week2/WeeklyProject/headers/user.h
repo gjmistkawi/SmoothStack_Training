@@ -2,6 +2,12 @@
 #define __user_h__
 
 #include <string>
+#include <sstream>
+#include <iomanip>
+#include <openssl/sha.h>
+
+// Add to compile:
+// g++ -lcrypto main.cc
 
 using namespace std;
 
@@ -10,13 +16,17 @@ class User {
         string _userName;
         string _password;
 
+        string passwordHash(const string);
+
     public:
         User(void);
         User(string, string);
         //~User(void);
+        void loadUser(string,string);
 
         //login functions
-        string  getUserName();
+        string  getUserName(void);
+        string  getHashPass(void);
         bool    login(string);
 };
 
