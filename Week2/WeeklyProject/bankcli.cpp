@@ -23,10 +23,10 @@ void displayLogs();
 
 int main() {
     bank = ProtoReadWrite::readFromDisk();
-    //bank->createUser("guest", "password");
     
     string input, pass;
     bool loggedIn = false;
+    bool change = false;
 
 
     // Login loop
@@ -53,15 +53,15 @@ int main() {
             showAccounts();
         } else if(input == "display account") {
             displayAccount();
-            ProtoReadWrite::writeToDisk(bank);
+            change = true;
         } else if(input == "search name") {
             searchName();
         } else if(input == "new account") {
             newAccount();
-            ProtoReadWrite::writeToDisk(bank);
+            change = true;
         } else if(input == "close account") {
             closeAccount();
-            ProtoReadWrite::writeToDisk(bank);
+            change = true;
         } else if(input == "display logs") {
             displayLogs();
         } else if(input == "help") {
@@ -69,6 +69,9 @@ int main() {
         } else if(input != "quit") {
             cout << bank->logError("Invalid command") << endl;
         }
+
+        if(change == true)
+            ProtoReadWrite::writeToDisk(bank);
     }
 
     return 0;

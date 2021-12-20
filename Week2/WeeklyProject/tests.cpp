@@ -4,6 +4,7 @@
 #include "headers/user.h"
 #include "headers/bank.h"
 #include "headers/transaction.h"
+#include "headers/protoreadwrite.h"
 
 using namespace std;
 
@@ -11,7 +12,8 @@ void transactionTests();
 void userTests();
 void accountTests();
 void bankTests();
-void cliTests();
+//void cliTests();
+void protobufTests();
 
 int main() {
     cout << "=============================" << endl << endl;
@@ -22,8 +24,10 @@ int main() {
     accountTests();
     cout << endl << "=============================" << endl << endl;
     bankTests();
+    //cout << endl << "=============================" << endl << endl;
+    //cliTests();
     cout << endl << "=============================" << endl << endl;
-    cliTests();
+    protobufTests();
     cout << endl;
 
     return 0;
@@ -210,6 +214,45 @@ void bankTests() {
     delete bank;
 }
 
-void cliTests() {
-    return;
+
+//void cliTests() {}
+
+
+void protobufTests() {
+    cout << "Protobuf Class Unit Testing" << endl << endl;
+
+    cout << "1) Persistance tests --- ";
+    Bank* b = ProtoReadWrite::readFromDisk();
+
+    string fName = "Jeremy";
+    string lName = "Fox";
+    string ssn = "191919191";
+
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
+    string date = to_string(ltm->tm_mon + 1) + "/"
+                + to_string(ltm->tm_mday) + "/"
+                + to_string(ltm->tm_year + 1900);
+
+    int accountNum = b->createAccount(ssn, fName, lName);
+
+    long dollars = 10;
+    long cents = 1;
+    Transaction::Transaction_Type type = Transaction::Transaction_Type::credit;
+    Transaction* t = new Transaction(dollars, cents, type);
+    assert(b->addTransaction(accountNum, t) == true);
+
+    string details = "Customer Name: " + fName + " " + lName + "\n"
+                    + "SSN: ***-**-" + ssn.substr(ssn.size() - 4) + "\n"
+                    + "Date Opened: " + date + "\n"
+                    + "Account: " + to_string(accountNum) + "\n"
+                    + "Balance: $" + to_string(dollars) + ".0" + to_string(cents) + "\n";  
+    assert(details == b->displayAccount(accountNum));
+
+    ProtoReadWrite::writeToDisk(b);
+    delete b;
+
+    b = ProtoReadWrite::readFromDisk();
+    assert(details ==  b->displayAccount(accountNum));
+    cout << " PASS" << endl;
 }

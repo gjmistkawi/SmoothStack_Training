@@ -8,7 +8,7 @@ mainapp: bankcli.o account.o user.o bank.o transaction.o protoreadwrite.o bank.p
 	$(CC) $(CXXFLAGS) -o bankcli bankcli.o account.o user.o bank.o transaction.o protoreadwrite.o bank.pb.o $(SSLFLAGS) `pkg-config --cflags --libs protobuf`
 
 tests: tests.o account.o user.o bank.o transaction.o
-	$(CC) $(CXXFLAGS) -o tests tests.o account.o user.o bank.o transaction.o $(SSLFLAGS)
+	$(CC) $(CXXFLAGS) -o tests tests.o account.o user.o bank.o transaction.o protoreadwrite.o bank.pb.o $(SSLFLAGS) `pkg-config --cflags --libs protobuf`
 
 %.o: %.cpp
 	$(CC) $(CXXFLAGS) -c $^

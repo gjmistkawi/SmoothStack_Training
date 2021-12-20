@@ -2,9 +2,8 @@
 
 ## Overview
 This application is a simply command line interface \(CLI\) for a banks back-end.
-The data is not persistent yet, as there is no database for the application.
-To compensate for this, I have added in some false records that are hard-coded into the program, but will be removed later.
-The application is currently set to only allow a single user to log in, and the info for that login is \[user: guest, password: password\].
+The data is persistant through google protobuf.
+The application currently has a single user setup for login, and the info for that login is \[user: guest, password: password\].
 No encryption has been added to the transactions or login yet, but that will be added soon.
 
 ## Commands
