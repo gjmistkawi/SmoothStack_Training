@@ -1,0 +1,14 @@
+2)  One of the frustrating things of my solution is that strings are not supported 
+    for switch statements in c++, so I had to do a long if/else statement chain.
+    Because c++ does not allow for dynamic runtime typing from strings, I had to 
+    hard code the answers within those if statements. I haven't had much experience 
+    with changing types like this, but python types are extremely dynamic. Not sure 
+    you would be able to turn a string into the designated typing though.
+
+3)  The "-g" flag produces the debugging indormation when compiling the program.
+
+4)  The "-c" flag outputs only the object files for each source file because the 
+    process is stopped before the linking stage.
+
+5)  I would set a variable to be a value, then subtract that same number from 
+    the variable and see the remainder.
