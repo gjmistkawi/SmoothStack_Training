@@ -2,7 +2,13 @@
 
 using namespace std;
 
+
+long verifyInput(string input) {
+
+}
+
 int main() {
-    cout << "Hello World!" << endl;
+
+
     return 0;
 }
