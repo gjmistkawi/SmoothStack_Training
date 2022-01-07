@@ -17,7 +17,7 @@ Sentence::Sentence(char* sent) {
 }
 
 //deep copyz
-Sentence::Sentence(Sentence& s) {
+Sentence::Sentence(const Sentence& s) {
     sentence = new char[strlen(s.data())];
     strcpy(sentence, s.data());
     
@@ -27,7 +27,7 @@ Sentence::Sentence(Sentence& s) {
 }
 
 // deep assignment
-Sentence& Sentence::operator=(const Sentence s) {
+Sentence& Sentence::operator=(const Sentence& s) {
     sentence = new char[strlen(s.data())];
     strcpy(sentence, s.data());
 
@@ -59,7 +59,7 @@ Sentence& Sentence::operator=(Sentence&& s) {
     vsentence = s.vsentence;
 
     s.sentence = nullptr;
-    vsentence.clear();
+    s.vsentence.clear();
     return *this;
 }
 

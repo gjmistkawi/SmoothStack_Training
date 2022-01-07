@@ -14,8 +14,8 @@ public:
     Sentence(char* sent); // regular constructor
 
     //copy
-    Sentence(Sentence& s); // deep copy  constructor
-    Sentence& operator= (Sentence s); // deep copy assignment operator
+    Sentence(const Sentence& s); // deep copy  constructor
+    Sentence& operator= (const Sentence& s); // deep copy assignment operator
     //move
     Sentence(Sentence&& s); // deep move constuctor
     Sentence& operator= (Sentence&& s);
