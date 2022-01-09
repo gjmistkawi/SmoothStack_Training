@@ -16,7 +16,7 @@ Sentence::Sentence(char* sent) {
     }
 }
 
-//deep copyz
+//deep copy
 Sentence::Sentence(const Sentence& s) {
     sentence = new char[strlen(s.data())];
     strcpy(sentence, s.data());
