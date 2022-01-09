@@ -174,6 +174,7 @@ float Rectangle::perimeter(void) const {
     return (2 * _width) + (2 * _height);
 }
 
+
 // Square
 
 Square::Square() { }
@@ -203,7 +204,7 @@ Square& Square::operator=(const Square& r) {
 
 Square::Square(Square&& r) {
     for(int i = 0; i < 4; i++) {
-        _vertices[i] = new Vertex(*r._vertices[i]);
+        _vertices[i] = r._vertices[i];
         r._vertices[i] = nullptr;
     }
 
@@ -234,4 +235,44 @@ float Square::area(void) const {
 float Square::perimeter(void) const {
     cout << "sqr call - ";
     return 4 * _side;
+}
+
+
+// Ellipse
+
+Ellipse::Ellipse(Vertex vertex, Vertex h_exterior, Vertex w_exterior) {
+    _vertex = new Vertex(vertex);
+
+    _height = _vertex->distance(h_exterior);
+    _width  = _vertex->distance(w_exterior);
+}
+
+Ellipse::~Ellipse(void) {
+    delete _vertex;
+}
+
+float Ellipse::area(void) const {
+    return PI * _height * _width;
+}
+
+
+// Circle
+
+Circle::Circle(Vertex vertex, Vertex exterior):
+    Ellipse(vertex, exterior, exterior) {
+    _radius = _width;
+}
+
+Circle::~Circle(void) { }
+
+float Circle::area(void) const {
+    return PI * _radius * _radius;
+}
+
+float Circle::circumference(void) const {
+    return 2 * PI * _radius;
+}
+
+float Circle::diameter(void) const {
+    return 2 * _radius;
 }

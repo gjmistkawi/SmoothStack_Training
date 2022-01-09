@@ -127,17 +127,7 @@ public:
     Ellipse(Vertex vertex, Vertex h_exterior, Vertex w_exterior);
     ~Ellipse(void);
 
-    //deep copy
-    Ellipse(const Ellipse& c);
-    Ellipse& operator=(const Ellipse& c);
-
-    //move
-    Ellipse(Ellipse&& c);
-    Ellipse& operator=(Ellipse&& c);
-
     virtual float area(void) const;
-    //float perimeter(void) const;
-    virtual float circumference() const;
 };
 
 class Circle: public Ellipse {
@@ -147,14 +137,6 @@ private:
 public:
     Circle(Vertex vertex, Vertex exterior);
     ~Circle(void);
-
-    //deep copy
-    Circle(const Circle& c);
-    Circle& operator=(const Circle& c);
-
-    //move
-    Circle(Circle&& c);
-    Circle& operator=(Circle&& c);
 
     float area(void) const;
     //float perimeter(void) const;
