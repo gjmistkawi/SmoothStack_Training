@@ -3,22 +3,21 @@
 
 using namespace std;
 
+string err = "The float is not compatible to int.";
+
+
 bool isInt(float x);
-float* compare(float* x, float* y);
+bool compare(float x, float y);
 
 int main(void) {
-    float* x = new float(6.0);
-    float* y = new float(5.0);
+    float x = 6.0;
+    float y = 5.0;
+    float z = 5.1;
 
-    float* temp = compare(x,y);
+    assert(compare(x,y));
+    assert(!compare(z,y));
+    assert(compare(y,-1));
 
-    assert(temp == x);
-
-    float* z = new float(5.1);
-    compare(z,y);
-
-    delete x;
-    delete y;
 
     return 0;
 }
@@ -27,24 +26,23 @@ bool isInt(float x) {
     int temp = x;
     if((x-temp) == 0.)
         return true;
-    else 
-        throw invalid_argument("The float is not compatible to int.");
+    else
+        throw invalid_argument(err);
 }
 
-float* compare(float* x, float* y) {
+bool compare(float x, float y) {
     try {
-        isInt(*x);
-        isInt(*y);
-
-        if(*x == *y)
-            return 0;
-        else if(*x > *y)
-            return x;
-        else
-            return y;
+        isInt(x);
+        isInt(y);
     }
 
-    catch(string msg) {
-        cout << msg << endl;
+    catch(invalid_argument& e) {
+        assert(e.what() == err);
+        return false;
     }
+
+    if(x > y)
+        return true;
+    else
+        return false;
 }
