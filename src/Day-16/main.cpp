@@ -1,18 +1,13 @@
 #include <cassert>
 #include <iostream>
-#include <sstream>
-#include <vector>
 #include <iomanip>
-#include <bitset>
+#include <vector>
+#include "number.h"
 
-using namespace std;
+using std::string;
+using std::cout;
 
-void parseInput(string input);
-void stringToHex(string s);
-void stringToBin(string s);
-unsigned int* hexstringToInt(string s);
-unsigned int* binstringToInt(string s);
-void addInput(string s1, string s2);
+string parseInput(string input);
 
 int main(void) {
     bool quit = false;
@@ -20,125 +15,65 @@ int main(void) {
     while(!quit) {
         cout << "prompt > ";
         string input;
-        getline(cin, input);
+        getline(std::cin, input);
 
         if(input == "quit" || input == "exit")
             quit = true;
         
         else {
-            parseInput(input);
+            cout << std::right << std::setw(20) << parseInput(input) << std::endl;
         }
     }
 
     return 0;
 }
 
-void parseInput(string input) {
-    vector<string> v;
+string parseInput(string input) {
+    std::vector<string> v;
     string data, output;
     int x,y;
 
-    stringstream parse(input);
-    stringstream ss;
+    std::stringstream parse(input);
+    std::stringstream ss;
 
     while(parse >> data)
         v.push_back(data);
 
+    try {
+        if(v.size() == 3 && v.at(1) == "+") {
+            Number n = Number(v.at(0)) + Number(v.at(2));
+            output = n.asDecimal();
+        }
+        //output = (Number(v.at(0)) + Number(v.at(2))).asDecimal();
 
-    if(v.size() == 3 && v.at(1) == "+")
-        addInput(v.at(0), v.at(2));
-
-    else if(v.size() == 2) {
-        if(v.at(0) == "hex") {
-            ss << hex << stoi(v.at(1));
-            output = ss.str();
-            cout << setfill(' ') << setw(20) << "0x" << output << endl;
+        else if(v.size() == 2) {
+            if(v.at(0) == "hex")
+                output = Number(v.at(1)).asHex();
+            else if(v.at(0) == "bin")
+                output =  Number(v.at(1)).asBinary();
+            else
+                throw std::invalid_argument("Invalid Option");
         }
 
-        else if(v.at(0) == "bin")
-            stringToBin(v.at(1));
+        else if(v.size() == 1)
+            output = Number(v.at(0)).asDecimal();
+
+        else
+            throw std::invalid_argument("Invalid Option");
+
+
+        cout << output << std::endl;
+        return output;
     }
 
-    else if(v.size() == 1) {
-        //is hex
-        if(v.at(0).compare(0,2, "0x") == 0)
-            stringToHex(v.at(0));
 
-        //is binary
-        else if(v.at(0).compare(0,2, "0b") == 0)
-            stringToBin(v.at(0));
+    catch(std::invalid_argument &e) {
+        if(e.what() == "stoi")
+            return "Invalid Number";
+        return e.what();
     }
 
-}
-
-void stringToHex(string s) {
-    unsigned int* i;
-    if(s.compare(0,2, "0b") == 0)
-        i = binstringToInt(s.substr(2));
-    else
-        i = hexstringToInt(s);
-
-    if(i == 0) {
-        cout << setfill(' ') << setw(20) << "Invalid number" << endl;
-        return;
+    catch(std::out_of_range &e) {
+        return "Number out of bounds";
     }
-
-    cout << setfill(' ') << setw(20) << *i << endl; 
-}
-
-void stringToBin(string s) {
-    unsigned int* i;
-    if(s.compare(0,2, "0x") == 0)
-        i = hexstringToInt(s);
-
-    else {
-        *i = stoi(s);
-    }
-
-    if(i == 0) {
-        cout << setfill(' ') << setw(20) << "Invalid number" << endl;
-        return;
-    }
-
-    string output = bitset<16>(*i).to_string();
-    cout << setfill(' ') << setw(20) << "0b" << output << endl; 
-}
-
-unsigned int* hexstringToInt(string s) {
-    // makes sure its a valid hex string
-    string temp = s.substr(2);
-    for(int i = 0; i < temp.size(); i++) {
-        if(!isxdigit(temp[i]))
-            return 0;
-    }
-
-    stringstream ss;
-    unsigned int* i = new unsigned int();
-
-    ss << hex << s;
-    ss >> *i;
-
-    return i;
-}
-
-unsigned int* binstringToInt(string s) {
-    unsigned int* i = new unsigned int();
-    *i = stoi(s, 0, 2);
-    return i;
-}
-
-void addInput(string s1, string s2) {
-    unsigned int x, y;
-
-    if(s1.compare(0,2, "0x") == 0)
-        x = *hexstringToInt(s1);
-    else
-        x = stoi(s1);
-
-    if(s2.compare(0,2, "0x") == 0)
-        y = *hexstringToInt(s2);
-    else
-        y = stoi(s2);
-
-    cout << setfill(' ') << setw(20) << x+y << endl; 
 }
