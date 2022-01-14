@@ -3,46 +3,50 @@
 
 using namespace std;
 
-string err = "The float is not compatible to int.";
 
+class MyFloat {
+private:
+    string err = "The float is not compatible to int.";
+    float num;
 
-bool isInt(float x);
-bool compare(float x, float y);
+    bool isInt(float x) {
+        int temp = x;
+        if((x-temp) == 0.)
+            return true;
+        else
+            throw invalid_argument(err);
+    }
+
+public:
+    MyFloat(float f) {
+        isInt(f);
+        num = f;
+    }
+    
+
+    bool operator >(const MyFloat &f) {
+        return (num > f.num);
+    }
+};
+
+bool compare(float x, float y) {
+    return MyFloat(x) > MyFloat(y);
+}
 
 int main(void) {
     float x = 6.0;
     float y = 5.0;
     float z = 5.1;
 
-    assert(compare(x,y));
-    assert(!compare(z,y));
-    assert(compare(y,-1));
-
-
-    return 0;
-}
-
-bool isInt(float x) {
-    int temp = x;
-    if((x-temp) == 0.)
-        return true;
-    else
-        throw invalid_argument(err);
-}
-
-bool compare(float x, float y) {
     try {
-        isInt(x);
-        isInt(y);
+        assert(compare(x,y));
+        assert(!compare(z,y));
+        assert(compare(y,-1));
     }
 
     catch(invalid_argument& e) {
-        assert(e.what() == err);
-        return false;
+        cout << e.what() << endl;
     }
 
-    if(x > y)
-        return true;
-    else
-        return false;
+    return 0;
 }
