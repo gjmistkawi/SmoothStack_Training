@@ -13,4 +13,4 @@ sample: sample.o
 	$(CC) $(CXXFLAGS) -c $^
 
 clean:
-	rm main sample *.o
+	rm main sample *.o *.gch
