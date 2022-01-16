@@ -1,7 +1,7 @@
 #include <cassert>
 #include <iostream>
 #include "currency.h"
-#include "account.h"
+#include "account.cpp"
 
 
 using std::cout;

@@ -1,16 +1,13 @@
 CC = clang++
 CXXFLAGs = -std=c++17
 
-all: main sample
+all: main
 
-main: main.o currency.o account.o
-	$(CC) $(CXXFLAGS) -o main main.o currency.o account.o
-
-sample: sample.o
-	$(CC) $(CXXFLAGS) -o sample sample.o
+main: main.o currency.o account.o convert.o
+	$(CC) $(CXXFLAGS) -o main main.o currency.o account.o convert.o
 
 %.o: %.cpp %.h
 	$(CC) $(CXXFLAGS) -c $^
 
 clean:
-	rm main sample *.o *.gch
+	rm main *.o
