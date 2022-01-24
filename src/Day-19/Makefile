@@ -1,13 +1,17 @@
 CC = clang++
-CXXFLAGs = -std=c++17
+CXXFLAGS = -std=c++17
+GRAPH = -I/usr/include/python2.7/Python.h
 
 all: main
 
-main: main.o myvector.o
-	$(CC) $(CXXFLAGS) -o main main.o myvector.o
+main: main.o body.o
+	$(CC) $(CXXFLAGS) $(GRAPH) -o main main.o body.o -lpython2.7
 
-%.o: %.cpp %.h
-	$(CC) $(CXXFLAGS) -c $^
+main.o: main.cpp
+	$(CC) $(CXXFLAGS) -c main.cpp 
+
+body.o: body.cpp
+	$(CC) $(CXXFLAGS) -c body.cpp 
 
 clean:
 	rm main *.o

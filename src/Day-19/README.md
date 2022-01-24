@@ -1,3 +1,7 @@
-# Day 17
+# Day 19
 
-## Templating
+## Lambdas
+
+N-body problem, measured with varying N bodies and tested for interactions per millisecond.
+
+![alt text](plot.png)
