@@ -6,8 +6,9 @@
 
 template<typename Iterator, typename T>
 struct accumulate_block {
-    void operator()(Iterator first, Iterator last, T&result) {
-        result = std::accumulate(first, last, result);
+    void operator()(Iterator first, Iterator last, T init, std::promise<T> p) {
+        T t = std::accumulate(first, last, init);
+        p.set_value(t);
     }
 };
 
@@ -23,18 +24,28 @@ T parallel_accumulate(Iterator first, Iterator last, T init) {
     std::cout << "num_threads: " << num_threads << std::endl;
     unsigned long const block_size = length/num_threads;
 
+    std::vector<std::promise<T>> promises(num_threads);
+    std::vector<std::future<T>> futures(num_threads);
+    for(int i = 0; i < num_threads; i++)
+        futures.at(i) = promises.at(i).get_future();
+    
+
+
     std::vector<T> results(num_threads);
-    std::vector<std::thread> threads(num_threads-1);
+    std::vector<std::thread> threads(num_threads);
 
     Iterator block_start = first;
     for(unsigned long i =0; i < (num_threads -1); ++i) {
         Iterator block_end = block_start;
         std::advance(block_end, block_size);
-        threads[i] = std::thread(accumulate_block<Iterator,T>(), block_start, block_end, std::ref(results[i]));
+        threads[i] = std::thread(accumulate_block<Iterator,T>(), block_start, block_end, 0, std::move(promises.at(i)));
         block_start = block_end;
     }
+    threads.back() = std::thread(accumulate_block<Iterator,T>(), block_start, last, 0, std::move(promises.back()));
 
-    accumulate_block<Iterator,T>()(block_start, last, results[num_threads-1]);
+    for(int i = 0; i < futures.size(); i++)
+        results.at(i) = futures.at(i).get();
+    
     for(auto& entry: threads)
         entry.join();
 
@@ -43,7 +54,7 @@ T parallel_accumulate(Iterator first, Iterator last, T init) {
 
 int main(void) {
     std::vector<unsigned long> v;
-    for(int i = 0; i < 250000; i++)
+    for(int i = 0; i < 1000; i++)
         v.push_back(i);
 
     unsigned long result = parallel_accumulate(v.begin(), v.end(), 0);
