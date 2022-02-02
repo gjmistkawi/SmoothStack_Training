@@ -1,3 +1,3 @@
-# Day 24
+# Day 25
 
-## Thread-Safe Queue
+## Promises and Futures
